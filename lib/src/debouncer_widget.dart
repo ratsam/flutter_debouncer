@@ -7,8 +7,8 @@ typedef TapDebouncerFunc = Future<void> Function();
 /// Tap debouncer widget
 class TapDebouncer extends StatefulWidget {
   const TapDebouncer({
-    Key key,
-    @required this.builder,
+    Key? key,
+    required this.builder,
     this.waitBuilder,
     this.onTap,
     this.cooldown,
@@ -26,13 +26,13 @@ class TapDebouncer extends StatefulWidget {
   /// Waiting button builder function
   /// context is current context
   /// child is widget returning from builder method with onTap equal null
-  final Widget Function(BuildContext context, Widget child) waitBuilder;
+  final Widget Function(BuildContext context, Widget child)? waitBuilder;
 
   /// Function to call on tap
-  final Future<void> Function() onTap;
+  final Future<void> Function()? onTap;
 
   /// Cooldown duration - delay after onTap executed (successfully or not)
-  final Duration cooldown;
+  final Duration? cooldown;
 
   @override
   _TapDebouncerState createState() => _TapDebouncerState();
