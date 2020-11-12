@@ -21,7 +21,7 @@ class TapDebouncer extends StatefulWidget {
   /// Main button builder function
   /// context is current context
   /// onTap is function to pass to SomeButton or InkWell
-  final Widget Function(BuildContext context, TapDebouncerFunc onTap) builder;
+  final Widget Function(BuildContext context, TapDebouncerFunc? onTap) builder;
 
   /// Waiting button builder function
   /// context is current context
@@ -50,9 +50,8 @@ class _TapDebouncerState extends State<TapDebouncer> {
 
   @override
   Widget build(BuildContext context) {
-    int? qwer; // !!!
     return StreamBuilder<bool>(
-      stream: _tapDebouncerHandler.busy,
+      stream: _tapDebouncerHandler.busyStream,
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         if (snapshot.hasError) {
           throw StateError(
@@ -66,10 +65,10 @@ class _TapDebouncerState extends State<TapDebouncer> {
                 ? null
                 : () async {
                     await _tapDebouncerHandler.onTap(() async {
-                      await widget.onTap();
+                      await widget.onTap!();
 
                       if (widget.cooldown != null) {
-                        await Future<void>.delayed(widget.cooldown);
+                        await Future<void>.delayed(widget.cooldown!);
                       }
                     });
                   },
@@ -81,7 +80,7 @@ class _TapDebouncerState extends State<TapDebouncer> {
         if (widget.waitBuilder == null) {
           return disabledChild;
         } else {
-          return widget.waitBuilder(context, disabledChild);
+          return widget.waitBuilder!(context, disabledChild);
         }
       },
     );
